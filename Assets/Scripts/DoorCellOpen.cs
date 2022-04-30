@@ -11,21 +11,27 @@ public class DoorCellOpen : MonoBehaviour
     public GameObject TheDoor;
     public AudioSource CreakSound;
 
+    private string DoorOpenAnimation = "FirstDoorOpenAnim";
+
     void Update()
     {
         TheDistance = PlayerCasting.DistanceFromTarget;
     }
 
     void OnMouseOver() {
-        if (TheDistance <= 3) {
+        if (TheDistance <= 2) {
             ActionDisplay.SetActive(true);
             ActionText.SetActive(true);
         }
-        if (Input.GetButtonDown("Action") && TheDistance <= 3) {
+        if (TheDistance > 2) {
+            ActionDisplay.SetActive(false);
+            ActionText.SetActive(false);
+        }
+        if (Input.GetButtonDown("Action") && TheDistance <= 2) {
             this.GetComponent<BoxCollider>().enabled = false;
             ActionDisplay.SetActive(false);
             ActionText.SetActive(false);
-            TheDoor.GetComponent<Animation>().Play("FirstDoorOpenAnim");
+            TheDoor.GetComponent<Animation>().Play(DoorOpenAnimation);
             CreakSound.Play();
         }
     }
